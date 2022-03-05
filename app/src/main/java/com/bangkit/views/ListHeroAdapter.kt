@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.views.databinding.ItemRowHeroBinding
 import com.bumptech.glide.Glide
 
 class ListHeroAdapter(private val listHero: ArrayList<Hero>): RecyclerView.Adapter<ListHeroAdapter.ListViewHolder>() {
@@ -18,10 +19,9 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>): RecyclerView.Adapt
     }
 
     // Menampilkan view holder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_row_hero, parent, false)
-        return ListViewHolder(view)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
+        val binding = ItemRowHeroBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        return ListViewHolder(binding)
     }
 
     // Menambahkan fungsi onClick
@@ -30,19 +30,18 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>): RecyclerView.Adapt
         Glide.with(holder.itemView.context)
             .load(photo)
             .circleCrop()
-            .into(holder.imgPhoto)
-        holder.tvName.text = name
-        holder.tvDescription.text = description
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listHero[holder.adapterPosition]) }
+            .into(holder.binding.imgItemPhoto)
+        holder.binding.tvItemName.text = name
+        holder.binding.tvItemDescription.text = description
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(listHero[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount(): Int = listHero.size
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
-        var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
-        var tvDescription: TextView = itemView.findViewById(R.id.tv_item_description)
-    }
+    class ListViewHolder(var binding: ItemRowHeroBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickCallback {
         fun onItemClicked(data: Hero)
