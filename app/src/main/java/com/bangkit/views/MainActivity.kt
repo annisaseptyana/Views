@@ -15,5 +15,11 @@ class MainActivity : AppCompatActivity() {
             val moveToCustomView = Intent(this@MainActivity,CustomView::class.java)
             startActivity(moveToCustomView)
         }
+
+        val btnRecyclerView: Button = findViewById(R.id.btn_recycler_view)
+        btnRecyclerView.setOnClickListener{
+            val moveToRecyclerView = Intent(this@MainActivity,RecyclerView::class.java)
+            startActivity(moveToRecyclerView)
+        }
     }
 }

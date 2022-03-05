@@ -29,7 +29,7 @@ class CustomView : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                
+
             }
         })
         myButton.setOnClickListener{
