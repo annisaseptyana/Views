@@ -2,6 +2,7 @@ package com.bangkit.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,10 +24,20 @@ class RecyclerView : AppCompatActivity() {
             return listHero
         }
 
+    private fun showSelectedHero(hero: Hero) {
+        Toast.makeText(this, "Kamu memilih " + hero.name + "!", Toast.LENGTH_SHORT).show()
+    }
+
     private fun showRecyclerList() {
         rvHeroes.layoutManager = LinearLayoutManager(this)
         val listHeroAdapter = ListHeroAdapter(datalist)
         rvHeroes.adapter = listHeroAdapter
+
+        listHeroAdapter.setOnItemClickCallback(object:ListHeroAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Hero) {
+                showSelectedHero(data)
+            }
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
